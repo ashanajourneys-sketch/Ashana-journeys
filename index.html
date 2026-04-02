@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#07080c"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <title>Ashana Journeys — Adventure. Real People. Real Connections.</title>
+  <meta name="description" content="Curated group hikes, diving, surfing and cultural trips across Malaysia and the world. Join a community of real adventurers."/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://ashanajourneys.com/"/>
+  <meta property="og:title"        content="Ashana Journeys — Adventure. Real People."/>
+  <meta property="og:description"  content="Curated group hikes, diving, surfing and cultural trips. Join a community of real adventurers."/>
+  <meta property="og:image"        content="https://ashanajourneys.com/og-cover.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:site_name"    content="Ashana Journeys"/>
+  <meta property="og:locale"       content="en_MY"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:title"       content="Ashana Journeys — Adventure. Real People."/>
+  <meta name="twitter:description" content="Curated group hikes, diving, surfing and cultural trips."/>
+  <meta name="twitter:image"       content="https://ashanajourneys.com/og-cover.jpg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,900&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- ── TRIP DETAIL MODAL ── -->
+<div id="trip-modal" role="dialog" aria-modal="true" aria-label="Trip details">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close">✕</button>
+    <div class="modal-gallery" id="modal-gallery">
+      <img class="modal-main-img" id="modal-main-img" src="" alt="Trip photo"/>
+      <div class="modal-thumbs" id="modal-thumbs"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tag">Curated Trip</div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-meta" id="modal-meta"></div>
+      <p class="modal-desc" id="modal-desc"></p>
+      <div class="modal-divider"></div>
+      <button class="modal-join-btn" id="modal-join-btn">🎒 Join This Trip — Register Now</button>
+      <a class="modal-wa-btn" id="modal-wa-btn" href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer">💬 Chat on WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── JOIN FORM OVERLAY ── -->
+<div id="join-form-overlay" role="dialog" aria-modal="true" aria-label="Join trip form">
+  <div class="jf-backdrop" id="jf-backdrop"></div>
+  <div class="jf-box">
+    <button class="jf-close" id="jf-close-btn" aria-label="Close">✕</button>
+    <div id="jf-form-section">
+      <div class="jf-label-eye">Reserve Your Spot</div>
+      <div class="jf-title">Join This Trip</div>
+      <div class="jf-trip-name" id="jf-trip-name-display"></div>
+      <div class="jf-group">
+        <label>Full Name *</label>
+        <input type="text" id="jf-name" placeholder="Enter your full name" autocomplete="name"/>
+      </div>
+      <div class="jf-group">
+        <label>Email Address *</label>
+        <input type="email" id="jf-email" placeholder="Enter your email address" autocomplete="email"/>
+      </div>
+      <div class="jf-group">
+        <label>Mobile Number *</label>
+        <input type="tel" id="jf-phone" placeholder="Enter your phone number" autocomplete="tel"/>
+      </div>
+      <div class="jf-group">
+        <label>How Many People Joining? *</label>
+        <select id="jf-packs">
+          <option value="" disabled selected>Select number of people</option>
+          <option value="1">1 person (just me)</option>
+          <option value="2">2 people</option>
+          <option value="3">3 people</option>
+          <option value="4">4 people</option>
+          <option value="5">5 people</option>
+          <option value="6">6 people</option>
+          <option value="7+">7+ people</option>
+        </select>
+      </div>
+      <div class="jf-err" id="jf-err"></div>
+      <button class="jf-send-btn" id="jf-send-btn">Send Registration ✦</button>
+      <div class="jf-divider"></div>
+      <a class="jf-wa-link" id="jf-wa-link" href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer">💬 Or Continue on WhatsApp →</a>
+    </div>
+    <div class="jf-success" id="jf-success">
+      <div class="jf-success-ico">✅</div>
+      <div class="jf-success-title">You're Registered!</div>
+      <p class="jf-success-sub">Hola! We've received your details for <strong id="jf-success-trip"></strong>. Our team will reach out shortly to confirm your spot. Keep an eye on your WhatsApp!</p>
+      <div class="jf-divider"></div>
+      <a class="jf-wa-link" id="jf-success-wa" href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer">💬 Confirm on WhatsApp →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAST TRIPS MODAL ── -->
+<div id="past-modal" role="dialog" aria-modal="true" aria-label="Past trips">
+  <div class="modal-backdrop" id="past-backdrop"></div>
+  <div class="past-box">
+    <div class="past-header">
+      <h2 class="past-header-title">Past <em style="color:var(--gold);font-style:italic;">Adventures</em></h2>
+      <button class="modal-close" id="past-close-btn" aria-label="Close">✕</button>
+    </div>
+    <div class="past-grid" id="past-grid">
+      <div class="past-empty">Loading past trips…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TSHIRT PRODUCT MODAL ── -->
+<div id="tshirt-product-modal" role="dialog" aria-modal="true" aria-label="Ashana Journeys T-Shirt">
+  <div class="tsm-backdrop" id="tsm-backdrop"></div>
+  <div class="tsm-box">
+    <button class="tsm-close" id="tsm-close-btn" aria-label="Close">✕</button>
+    <div class="tsm-inner">
+
+      <!-- Gallery -->
+      <div class="tsm-gallery">
+        <div class="tsm-main-wrap">
+          <img id="tsm-main-img"
+               src="https://i.ibb.co/20FS6DR1/20260330-085215.jpg"
+               alt="Ashana Journeys T-Shirt"
+               onerror="this.src='https://placehold.co/600x600/20232b/c9952b?text=Front'"/>
+        </div>
+        <div class="tsm-thumbs">
+          <div class="tsm-thumb-col">
+            <div class="tsm-thumb active" data-tsm-thumb onclick="tsmSetImg('https://i.ibb.co/20FS6DR1/20260330-085215.jpg',this)">
+              <img src="https://i.ibb.co/20FS6DR1/20260330-085215.jpg" alt="Front" loading="lazy"/>
+            </div>
+            <div class="tsm-thumb-lbl">Front</div>
+          </div>
+          <div class="tsm-thumb-col">
+            <div class="tsm-thumb" data-tsm-thumb onclick="tsmSetImg('https://i.ibb.co/zhhK9F2s/20260330-085402.jpg',this)">
+              <img src="https://i.ibb.co/zhhK9F2s/20260330-085402.jpg" alt="Back" loading="lazy"/>
+            </div>
+            <div class="tsm-thumb-lbl">Back</div>
+          </div>
+          <div class="tsm-thumb-col">
+            <div class="tsm-thumb" data-tsm-thumb onclick="tsmSetImg('https://i.ibb.co/5qY9K4G/IMG-20260330-085617.jpg',this)">
+              <img src="https://i.ibb.co/5qY9K4G/IMG-20260330-085617.jpg" alt="Right" loading="lazy"/>
+            </div>
+            <div class="tsm-thumb-lbl">Right</div>
+          </div>
+          <div class="tsm-thumb-col">
+            <div class="tsm-thumb" data-tsm-thumb onclick="tsmSetImg('https://i.ibb.co/3JthHsy/IMG-20260330-085601.jpg',this)">
+              <img src="https://i.ibb.co/3JthHsy/IMG-20260330-085601.jpg" alt="Left" loading="lazy"/>
+            </div>
+            <div class="tsm-thumb-lbl">Left</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="tsm-info">
+        <div class="tsm-badge">✦ Official Gear</div>
+        <h2 class="tsm-name">Ashana <em>Journeys</em><br/>T-Shirt</h2>
+        <p class="tsm-sub">EST. 2026 · Unisex Fit</p>
+        <div class="tsm-price">RM 75</div>
+        <p class="tsm-price-note">Free delivery for orders via WhatsApp · Ships within 3–5 days</p>
+        <p class="tsm-size-lbl">Select Size</p>
+        <div class="tsm-sizes">
+          <button type="button" class="tsm-size-btn" onclick="tsmSelectSize(this)">XS</button>
+          <button type="button" class="tsm-size-btn" onclick="tsmSelectSize(this)">S</button>
+          <button type="button" class="tsm-size-btn active" onclick="tsmSelectSize(this)">M</button>
+          <button type="button" class="tsm-size-btn" onclick="tsmSelectSize(this)">L</button>
+          <button type="button" class="tsm-size-btn" onclick="tsmSelectSize(this)">XL</button>
+          <button type="button" class="tsm-size-btn" onclick="tsmSelectSize(this)">XXL</button>
+        </div>
+        <a id="tsm-buy-btn" class="tsm-btn-buy"
+           href="https://ashanajourney.gumroad.com/l/nesnzj?wanted=true&variant=M"
+           target="_blank" rel="noopener noreferrer">
+          🛍️ BUY NOW — RM 75
+        </a>
+        <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="tsm-btn-wa">
+          💬 &nbsp;Ask Us on WhatsApp
+        </a>
+        <div class="tsm-divider"></div>
+        <ul class="tsm-details">
+          <li>Premium 100% cotton — soft, breathable, built for adventures</li>
+          <li>Exclusive Ashana Journeys EST. 2026 artwork front &amp; back</li>
+          <li>Unisex relaxed fit — true to size, available XS–XXL</li>
+          <li>Pre-shrunk fabric — wash cold, tumble dry low</li>
+          <li>Official merchandise supporting Ashana Journeys community</li>
+        </ul>
+        <div class="tsm-badges">
+          <span class="tsm-badge-pill">🔒 Secure Order</span>
+          <span class="tsm-badge-pill">📦 Ships in 3–5 Days</span>
+          <span class="tsm-badge-pill">✅ Official Gear</span>
+          <span class="tsm-badge-pill">💬 WhatsApp Support</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── TOP NAV (desktop) ── -->
+<nav id="top-nav" role="navigation" aria-label="Primary navigation">
+  <a href="#hero" class="tn-brand" aria-label="Ashana Journeys home">
+    <img src="hero/logo.png" alt="Ashana Journeys" class="tn-logo"/>
+  </a>
+  <ul class="tn-links" role="list">
+    <li><a href="#trips"    class="tn-link active" data-sec="trips">Trips</a></li>
+    <li><a href="#about"    class="tn-link" data-sec="about">Story</a></li>
+    <li><a href="#merchant" class="tn-link" data-sec="merchant">Gear</a></li>
+    <li><a href="#reviews"  class="tn-link" data-sec="reviews">Reviews</a></li>
+    <li><a href="#faq"      class="tn-link" data-sec="faq">FAQ</a></li>
+    <li><a href="#social"   class="tn-link" data-sec="social">Connect</a></li>
+  </ul>
+  <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="tn-wa" aria-label="WhatsApp us">💬 WhatsApp</a>
+  <button class="tn-theme-toggle" id="tn-theme-toggle" aria-label="Toggle light/dark mode" title="Toggle light mode">☀️</button>
+</nav>
+
+<!-- ── DOCK ── -->
+<nav id="dock" role="navigation" aria-label="Main navigation">
+  <a href="#trips" class="dock-btn active" data-sec="trips" aria-label="Trips"><span class="dock-ico">🧭</span><span class="dock-lbl">Trips</span></a>
+  <a href="#about" class="dock-btn" data-sec="about" aria-label="Our story"><span class="dock-ico">🌿</span><span class="dock-lbl">Story</span></a>
+  <a href="#hero" class="dock-btn" aria-label="Home"><img src="hero/logo.png" alt="Ashana Journeys" class="dock-logo-img"/></a>
+  <a href="#merchant" class="dock-btn" data-sec="merchant" aria-label="Gear store"><span class="dock-ico">🎽</span><span class="dock-lbl">Gear</span></a>
+  <a href="#reviews" class="dock-btn" data-sec="reviews" aria-label="Reviews"><span class="dock-ico">⭐</span><span class="dock-lbl">Reviews</span></a>
+  <a href="#social" class="dock-btn" data-sec="social" aria-label="Connect"><span class="dock-ico">✦</span><span class="dock-lbl">Connect</span></a>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero" aria-label="Ashana Journeys — Hero">
+    <img id="top-logo" src="hero/logo.png" alt="Ashana Journeys" loading="eager"/>
+    <div class="hero-media" aria-hidden="true">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+        <source src="hero/hero.mp4" type="video/mp4"/>
+      </video>
+    </div>
+    <div class="hero-scrim"    aria-hidden="true"></div>
+    <div class="hero-cyan-glow" aria-hidden="true"></div>
+    <div class="hero-ghost" aria-hidden="true">Journey</div>
+    <div class="hero-content">
+      <div class="hero-eyebrow" aria-hidden="true">
+        <div class="ey-line"></div>
+        <span class="ey-text">TRIP HOST. GROUP TRAVEL HOST.</span>
+      </div>
+      <p class="hero-partner-tag">With experienced guides and trusted partners.</p>
+      <h1 class="hero-title">
+        <span class="hl">Adventure.</span>
+        <span class="hl"><em>Real People.</em></span>
+        <span class="hl">Real Places.</span>
+      </h1>
+      <p class="hero-sub">Curated group hikes, diving and surfing trips across Malaysia and the world. Come alone or with family. You're joining a community.</p>
+      <div class="hero-ctas">
+        <a href="#trips" class="btn-gold">Explore Trips</a>
+        <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="btn-glass">WhatsApp Us</a>
+      </div>
+    </div>
+    <div id="hero-scroll" aria-hidden="true">
+      <div class="scroll-beam"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="m-item">Group Hikes</span><span class="m-sep">✦</span>
+      <span class="m-item">Scuba Diving</span><span class="m-sep">✦</span>
+      <span class="m-item">Surfing Trips</span><span class="m-sep">✦</span>
+      <span class="m-item">Cultural Tours</span><span class="m-sep">✦</span>
+      <span class="m-item">International Adventures</span><span class="m-sep">✦</span>
+      <span class="m-item">Group Hikes</span><span class="m-sep">✦</span>
+      <span class="m-item">Scuba Diving</span><span class="m-sep">✦</span>
+      <span class="m-item">Surfing Trips</span><span class="m-sep">✦</span>
+      <span class="m-item">Cultural Tours</span><span class="m-sep">✦</span>
+      <span class="m-item">International Adventures</span><span class="m-sep">✦</span>
+    </div>
+  </div>
+
+  <!-- TRIPS -->
+  <section id="trips" class="section">
+    <div class="trips-head reveal">
+      <div>
+        <div class="s-label">Upcoming Adventures</div>
+        <h2 class="s-title">Join Our <em>Trips</em></h2>
+      </div>
+      <div class="trips-right">
+        <p class="s-desc" style="text-align:right; max-width:280px;">Snag your spot before they fill — swipe through live trips.</p>
+      </div>
+    </div>
+    <div class="past-trips-btn-wrap">
+      <button class="btn-past-trips" id="view-past-btn">🕓 View Past Trips</button>
+    </div>
+    <div id="trips-rail" role="list" aria-label="Available trips" aria-live="polite">
+      <div class="rail-msg" role="status">Loading trips…</div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; padding:.7rem var(--pad) 0;" aria-live="polite">
+      <span class="trip-count" id="trip-count"></span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-visual reveal left">
+          <div class="about-img-wrap" id="about-slider" data-images='["assets/hiking.jpg","assets/surfing.jpg","assets/diving.jpg","assets/dirtbike.jpg"]' role="img" aria-label="Adventure gallery — swipe or drag to browse">
+            <img src="assets/hiking.jpg" alt="Adventurers on a mountain trail" class="about-img" id="about-slide-img" loading="lazy" decoding="async" width="600" height="750"/>
+            <div class="about-img-fade"  aria-hidden="true"></div>
+            <div class="about-img-frame" aria-hidden="true"></div>
+            <div class="about-swipe"     aria-hidden="true">↔ Swipe</div>
+          </div>
+          <div class="about-stat-card">
+            <div class="stat-n">100<sup>+</sup></div>
+            <div class="stat-l">Adventurers<br/>& growing</div>
+          </div>
+        </div>
+        <div class="about-text reveal right d2">
+          <div class="s-label">Who We Are</div>
+          <h2 class="s-title">Your World,<br/><em>Curated.</em></h2>
+          <p>Ashana Journeys is a registered brand, EST. 2026. We are a Trip Host platform focused on bringing people together through curated group travel experiences.</p>
+          <p>We host travel, hikes, diving, and surfing trips across local and international destinations for those who want more than just travel — real experiences, real connections, and unforgettable moments.</p>
+          <p>Every trip is carefully planned and run with experienced guides and trusted partners, so you can feel safe, supported, and fully present in the journey with like-minded people.</p>
+          <div class="pillars">
+            <div class="pillar reveal d1"><span class="p-ico">🏔️</span><h4>Hikes &amp; Treks</h4><p>Local &amp; international trails</p></div>
+            <div class="pillar reveal d2"><span class="p-ico">🤿</span><h4>Scuba Diving</h4><p>Guided dives for all levels</p></div>
+            <div class="pillar reveal d3"><span class="p-ico">🏄</span><h4>Surf Adventures</h4><p>Waves + culture combined</p></div>
+            <div class="pillar reveal d4"><span class="p-ico">🌏</span><h4>Cultural Trips</h4><p>Deeper travel experiences</p></div>
+          </div>
+          <div style="margin-top:2.5rem;"><a href="#trips" class="btn-glass">View All Trips</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section id="manifesto" class="section" aria-label="Our philosophy">
+    <div class="man-glow-l" aria-hidden="true"></div>
+    <div class="man-glow-r" aria-hidden="true"></div>
+    <div class="man-ghost"  aria-hidden="true">Raw</div>
+    <div class="man-inner reveal">
+      <div class="man-rule reveal d1"></div>
+      <blockquote class="man-q reveal d2">"Made for the moments.<br/>Captured for the <em>feed</em>."</blockquote>
+      <p class="man-body reveal d3">Ashana Journeys was built for people who want more than basic travel.<br/><br/>No one gets left out. Whether you are a beginner or experienced, you are welcome.<br/><br/>We capture your moments naturally throughout the trip. Photos and videos are included and shared after the trip.<br/><br/>Real places, real connections, and moments worth capturing and remembering.</p>
+      <div class="reveal d4"><a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="btn-glass">Join The Community</a></div>
+    </div>
+  </section>
+
+  <!-- GEAR/MERCHANT -->
+  <section id="merchant" class="section">
+    <div class="merch-head reveal">
+      <div class="s-label">Official Gear By</div>
+      <h2 class="s-title">Ashana <em>Store</em></h2>
+    </div>
+    <div class="merch-layout">
+      <div class="merch-hero reveal d1" id="tshirt-card">
+        <div class="mc-badge">360° View</div>
+        <div id="ts-iframe-wrap">
+          <iframe src="3d-model/ashana-3d-1.html" title="3D Ashana Journeys T-Shirt Viewer" scrolling="no" allowtransparency="true"></iframe>
+          <div class="ts-click-overlay" aria-hidden="true">
+            <a href="#" class="ts-overlay-label" id="ts-overlay-open">View Product ↗</a>
+          </div>
+        </div>
+        <div class="ts-hint" aria-hidden="true">↔ Drag or touch to rotate &nbsp;·&nbsp; Click below to shop</div>
+        <div class="mc-body">
+          <div class="mc-name">Ashana Journeys T-Shirt</div>
+          <div class="mc-price">RM 75</div>
+          <button class="btn-buy" id="tshirt-buy-btn">View &amp; Buy →</button>
+        </div>
+      </div>
+      <div class="merch-sub" id="merch-dyn" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="section">
+    <div class="wrap">
+      <div class="reviews-head reveal">
+        <div class="s-label">What Adventurers Say</div>
+        <h2 class="s-title"><em>Reviews</em></h2>
+      </div>
+      <div class="reviews-grid" id="reviews-grid" role="list" aria-live="polite">
+        <div class="reviews-empty">No reviews yet — be the first to adventure with us!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="wrap">
+      <div class="faq-head reveal">
+        <div class="s-label">Got Questions?</div>
+        <h2 class="s-title">Frequently <em>Asked</em></h2>
+      </div>
+      <div class="faq-list" id="faq-list">
+        <div class="faq-empty reveal">FAQs coming soon — stay tuned.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section id="social" class="section">
+    <div class="social-c">
+      <img src="hero/logo.png" alt="Ashana Journeys" class="social-logo reveal" loading="lazy"/>
+      <div class="s-label reveal d1" style="justify-content:center; margin-bottom:.8rem;">Find Us Online</div>
+      <h2 class="s-title reveal d2">Connect <em>With Us</em></h2>
+      <div class="social-stack reveal d3">
+        <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="soc-card wa">
+          <div class="soc-ico">💬</div><div class="soc-txt"><b>WhatsApp</b><span>+60 10 204 6250</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="https://www.instagram.com/ashanajourneys?igsh=MWt5ZGd4Mm9scjFpMg==" target="_blank" rel="noopener noreferrer" class="soc-card ig">
+          <div class="soc-ico">📸</div><div class="soc-txt"><b>Instagram</b><span>@ashanajourneys</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="https://www.tiktok.com/@ashanajourneys?_r=1&_t=ZS-95Cf4osfwWL" target="_blank" rel="noopener noreferrer" class="soc-card">
+          <div class="soc-ico">🎵</div><div class="soc-txt"><b>TikTok</b><span>@ashanajourneys</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="https://youtube.com/@ashanajourneys" target="_blank" rel="noopener noreferrer" class="soc-card">
+          <div class="soc-ico">▶️</div><div class="soc-txt"><b>YouTube (Coming Soon)</b><span>Ashana Journeys Travel</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="mailto:hello@ashanajourneys.com" class="soc-card">
+          <div class="soc-ico">✉️</div>
+          <div class="soc-txt"><b>Email Us</b><span>hello@ashanajourneys.com</span></div>
+          <span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <img src="hero/logo.png" alt="Ashana Journeys" class="ft-logo" loading="lazy"/>
+        <p>A Trip Host platform bringing people together through curated group travel. Hikes, diving, surfing &amp; cultural experiences — for everyone.</p>
+      </div>
+      <div class="ft-col">
+        <h5>Navigate</h5>
+        <a href="#trips">Upcoming Trips</a>
+        <a href="#about">Our Story</a>
+        <a href="#merchant">Gear Store</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#social">Connect</a>
+      </div>
+      <div class="ft-col">
+        <h5>Contact</h5>
+        <a href="tel:+60102046250">+60 10 204 6250</a>
+        <a href="mailto:hello@ashanajourneys.com">hello@ashanajourneys.com</a>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>© 2025 Ashana Journeys. All rights reserved.</p>
+      <div class="ft-payment">
+        <img src="https://i.ibb.co/HDp3kM9J/toppng-com-visa-mastercard-american-express-logos-american-express-1530x261.png" alt="Visa, Mastercard, American Express" loading="lazy"/>
+      </div>
+      <span class="ft-motto">Adventure. Real People.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ── LIGHT MODE TOGGLE (mobile floating) ── -->
+<button class="theme-toggle-float" id="theme-toggle-float" aria-label="Toggle light/dark mode" title="Toggle light mode">☀️</button>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
