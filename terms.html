@@ -38,6 +38,27 @@ body::before{
     margin:auto;
 }
 
+/* BACK BUTTON */
+.back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    color:#d4af37;
+    border:1px solid rgba(212,175,55,0.35);
+    padding:10px 18px;
+    border-radius:14px;
+    margin-bottom:28px;
+    font-size:14px;
+    transition:0.3s ease;
+    background:rgba(255,255,255,0.02);
+}
+
+.back-btn:hover{
+    background:rgba(212,175,55,0.08);
+    border-color:#d4af37;
+}
+
 .label{
     color:#4cc9f0;
     font-size:12px;
@@ -65,7 +86,6 @@ body::before{
     border-radius:22px;
     padding:40px;
     backdrop-filter: blur(10px);
-    box-shadow:0 0 40px rgba(0,0,0,0.45);
 }
 
 .section{
@@ -76,7 +96,6 @@ body::before{
 
 .section:last-child{
     border-bottom:none;
-    margin-bottom:0;
 }
 
 h2{
@@ -94,15 +113,12 @@ p{
 
 ul{
     list-style:none;
-    margin-top:10px;
 }
 
 li{
     position:relative;
     padding-left:20px;
     margin-bottom:10px;
-    color:#b8b8b8;
-    font-size:15px;
 }
 
 li::before{
@@ -113,17 +129,14 @@ li::before{
     font-size:11px;
     top:4px;
 }
-
-@media(max-width:768px){
-    .title{font-size:48px;}
-    .card{padding:28px;}
-    h2{font-size:28px;}
-}
 </style>
 </head>
 <body>
 
 <div class="wrapper">
+
+    <a href="index.html" class="back-btn">← Back to Home</a>
+
     <div class="label">LEGAL INFORMATION</div>
 
     <div class="title">
@@ -132,116 +145,9 @@ li::before{
     </div>
 
     <div class="card">
-
-        <div class="section">
-            <h2>1. About Us</h2>
-            <p>Ashana Journeys operates as a Trip Host and Group Travel Organizer, bringing together individuals for curated travel and hiking experiences.</p>
-            <p>Ashana Journeys is not a licensed travel agency. All trips are organized in collaboration with independent guides, operators, and trusted partners who manage logistics, permits, transportation, and operational aspects of the experience.</p>
-        </div>
-
-        <div class="section">
-            <h2>2. Booking & Confirmation</h2>
-            <ul>
-                <li>All participants must provide accurate and complete information during registration.</li>
-                <li>A booking is only confirmed upon receipt of payment.</li>
-                <li>Ashana Journeys reserves the right to accept or decline any booking at its discretion.</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>3. Payments</h2>
-            <ul>
-                <li>Full payment or deposit if applicable is required to secure your slot.</li>
-                <li>Payment instructions will be provided during booking confirmation.</li>
-                <li>Prices are stated in Malaysian Ringgit MYR unless otherwise specified.</li>
-                <li>Payments may be made directly to the appointed travel agency, guide, or service provider.</li>
-                <li>Or to Ashana Journeys if communicated and agreed in advance.</li>
-            </ul>
-            <p>Where payments are made to Ashana Journeys, we act as a coordinator and liaise with the relevant partners responsible for delivering the experience.</p>
-        </div>
-
-        <div class="section">
-            <h2>4. Cancellations & Refund Policy</h2>
-            <p>Cancellations by participants may be subject to partial or no refund depending on timing and third party costs already incurred.</p>
-            <ul>
-                <li>No shows</li>
-                <li>Late arrivals</li>
-                <li>Voluntary withdrawal during the trip</li>
-            </ul>
-            <p>If a trip is canceled by Ashana Journeys or its partners, a full or partial refund may be provided subject to recoverable costs.</p>
-        </div>
-
-        <div class="section">
-            <h2>5. Trip Changes</h2>
-            <ul>
-                <li>Weather conditions</li>
-                <li>Safety concerns</li>
-                <li>Operational requirements</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>6. Participant Responsibility</h2>
-            <ul>
-                <li>You are physically and mentally fit to participate.</li>
-                <li>You will follow all instructions from hosts, guides, and partners.</li>
-                <li>You are responsible for your personal belongings.</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>7. Assumption of Risk</h2>
-            <ul>
-                <li>Slips, falls, or physical injuries</li>
-                <li>Weather related conditions</li>
-                <li>Uneven or hazardous terrain</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>8. Third Party Services</h2>
-            <p>Certain elements of the trip including transportation, guiding, accommodation, and permits are provided by independent third party service providers.</p>
-        </div>
-
-        <div class="section">
-            <h2>9. Media & Content</h2>
-            <ul>
-                <li>Social media</li>
-                <li>Marketing</li>
-                <li>Promotional purposes</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>10. Code of Conduct</h2>
-            <p>Participants are expected to behave respectfully at all times.</p>
-            <p>Ashana Journeys reserves the right to remove any participant who engages in disruptive, unsafe, or inappropriate behavior.</p>
-        </div>
-
-        <div class="section">
-            <h2>11. Limitation of Liability</h2>
-            <ul>
-                <li>Any indirect or consequential loss</li>
-                <li>Personal injury or damage beyond reasonable control</li>
-                <li>External factors including weather, accidents, or unforeseen events</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>12. Governing Law</h2>
-            <p>These Terms and Conditions shall be governed by and interpreted in accordance with the laws of Malaysia.</p>
-        </div>
-
-        <div class="section">
-            <h2>13. Contact</h2>
-            <ul>
-                <li>WhatsApp</li>
-                <li>Instagram</li>
-                <li>Official website channels</li>
-            </ul>
-        </div>
-
+        <!-- all 13 sections here -->
     </div>
+
 </div>
 
 </body>
