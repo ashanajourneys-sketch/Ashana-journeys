@@ -35,6 +35,23 @@
     @media (max-width: 768px) {
       .terms-content { padding: 2rem 1.5rem; }
     }
+    @media (max-width: 959px) {
+  #dock {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(7, 8, 12, 0.97) !important;
+  }
+  #top-nav {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(7, 8, 12, 0.97) !important;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
   </style>
 </head>
 <body>
