@@ -23,11 +23,23 @@ const db  = getFirestore(app);
 
 /* ── VH polyfill ── */
 (function initVH() {
+  let lastWidth = window.innerWidth;
   function set() { document.documentElement.style.setProperty('--svh', (window.innerHeight * 0.01) + 'px'); }
-  set();
-  window.addEventListener('resize', set, { passive: true });
+  
+  set(); // Run once on load
+  
+  window.addEventListener('resize', () => {
+    // ONLY recalculate if the width changes (e.g. rotating the phone).
+    // This stops the mobile URL bar from breaking the scroll!
+    if (window.innerWidth !== lastWidth) {
+      lastWidth = window.innerWidth;
+      set();
+    }
+  }, { passive: true });
+  
   window.addEventListener('orientationchange', () => setTimeout(set, 120));
 })();
+
 
 /* ── SCROLL REVEAL ── */
 window.revealObs = new IntersectionObserver(entries => {
