@@ -93,21 +93,55 @@ window.addEventListener('load', initReveals);
   sections.forEach(s => spy.observe(s));
 })();
 
-/* ── ABOUT SLIDER ── */
+/* ── ABOUT SLIDER — dynamic from Firestore gallery collection ── */
+/* ── DYNAMIC ABOUT SLIDER (Firestore Integrated) ── */
 (function initSlider() {
   const wrap = document.getElementById('about-slider');
   const img  = document.getElementById('about-slide-img');
   if (!wrap || !img) return;
-  let images;
-  try   { images = JSON.parse(wrap.dataset.images || '[]'); }
-  catch { images = []; }
-  if (images.length < 2) return;
-  let idx = 0, startX = 0, dragging = false, dx = 0;
+
+  // Fallback images in case Firestore is empty
+  const defaultImages = [
+    'assets/hiking.jpg',
+    'assets/surfing.jpg',
+    'assets/diving.jpg',
+    'assets/dirtbike.jpg'
+  ];
+
+  let images = [];
+  let idx = 0;
   let wheelLocked = false;
 
+  // 1. Load Initial images from HTML dataset
+  try { 
+    images = JSON.parse(wrap.dataset.images || '[]'); 
+  } catch (e) { 
+    images = defaultImages; 
+  }
+
+  // 2. Listen to Firestore 'settings' collection (Matches Admin Panel)
+  onSnapshot(collection(db, 'settings'), snap => {
+    snap.forEach(d => {
+      const s = d.data();
+      if (s.heroImages && Array.isArray(s.heroImages)) {
+        // Map the object array {url: "...", label: "..."} to a simple URL array
+        const firestoreImages = s.heroImages.map(item => item.url);
+        
+        if (firestoreImages.length > 0) {
+          images = firestoreImages;
+          // Ensure index is valid if images were deleted
+          if (idx >= images.length) idx = 0;
+          img.src = images[idx];
+        }
+      }
+    });
+  });
+
   function goTo(i) {
+    if (images.length === 0) return;
     idx = (i + images.length) % images.length;
     const nextSrc = images[idx];
+    
     const preload = new Image();
     preload.onload = () => {
       img.style.transition = 'none';
@@ -123,11 +157,24 @@ window.addEventListener('load', initReveals);
     preload.src = nextSrc;
   }
 
+  // ── Touch & Mouse Controls ──
+  let startX = 0, dx = 0, dragging = false;
+
   wrap.addEventListener('touchstart', e => { startX = e.changedTouches[0].clientX; }, { passive: true });
-  wrap.addEventListener('touchend',   e => { dx = e.changedTouches[0].clientX - startX; if (Math.abs(dx) > 36) goTo(idx + (dx < 0 ? 1 : -1)); }, { passive: true });
-  wrap.addEventListener('mousedown',  e => { dragging = true; startX = e.clientX; e.preventDefault(); });
+  wrap.addEventListener('touchend', e => { 
+    dx = e.changedTouches[0].clientX - startX; 
+    if (Math.abs(dx) > 36) goTo(idx + (dx < 0 ? 1 : -1)); 
+  }, { passive: true });
+
+  wrap.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; e.preventDefault(); });
   window.addEventListener('mousemove', e => { if (dragging) dx = e.clientX - startX; });
-  window.addEventListener('mouseup',  () => { if (!dragging) return; dragging = false; if (Math.abs(dx) > 36) goTo(idx + (dx < 0 ? 1 : -1)); dx = 0; });
+  window.addEventListener('mouseup', () => { 
+    if (!dragging) return; 
+    dragging = false; 
+    if (Math.abs(dx) > 36) goTo(idx + (dx < 0 ? 1 : -1)); 
+    dx = 0; 
+  });
+
   wrap.addEventListener('wheel', e => {
     if (wheelLocked) return;
     const absDX = Math.abs(e.deltaX);
@@ -139,6 +186,27 @@ window.addEventListener('load', initReveals);
       setTimeout(() => { wheelLocked = false; }, 600);
     }
   }, { passive: false });
+})();
+
+
+// Load gallery from Firestore; fall back to local assets if empty
+(function loadGallerySlider() {
+  try {
+    onSnapshot(collection(db, 'gallery'), snap => {
+      if (snap.empty) {
+        initSlider(FALLBACK_GALLERY);
+        return;
+      }
+      const docs = [];
+      snap.forEach(d => docs.push({ order: d.data().order ?? 999, url: d.data().url }));
+      docs.sort((a, b) => a.order - b.order);
+      const urls = docs.map(d => d.url).filter(Boolean);
+      initSlider(urls.length ? urls : FALLBACK_GALLERY);
+    });
+  } catch(e) {
+    console.warn('Gallery load failed, using fallback:', e);
+    initSlider(FALLBACK_GALLERY);
+  }
 })();
 
 /* ── T-SHIRT 360 ── */
