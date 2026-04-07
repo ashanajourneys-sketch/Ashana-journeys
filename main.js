@@ -745,6 +745,44 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTshirtModal(); });
 
+/* ── DYNAMIC HERO VIDEO WITH LOCAL CACHING ── */
+const dynamicVideoEl = document.getElementById('dynamic-hero-video');
+const DEFAULT_VIDEO = 'hero/hero.mp4';
+
+if (dynamicVideoEl) {
+  // 1. Instantly load the last known video from cache (prevents blank screen delay)
+  const cachedUrl = localStorage.getItem('ashana-hero-video') || DEFAULT_VIDEO;
+  dynamicVideoEl.setAttribute('src', cachedUrl);
+
+  // 2. Check Firebase in the background for any live updates
+  onSnapshot(
+    collection(db, 'settings'),
+    snap => {
+      let dbVideoUrl = null;
+      snap.forEach(docSnap => {
+        if (docSnap.data().mainVideoUrl) dbVideoUrl = docSnap.data().mainVideoUrl;
+      });
+
+      // If DB has a video, use it. Otherwise fall back to local file.
+      const finalUrl = dbVideoUrl || DEFAULT_VIDEO;
+
+      // 3. Only interrupt and reload if the Firebase URL is DIFFERENT than what is currently playing
+      if (dynamicVideoEl.getAttribute('src') !== finalUrl) {
+        dynamicVideoEl.setAttribute('src', finalUrl);
+        dynamicVideoEl.load();
+        dynamicVideoEl.play().catch(e => console.warn('Autoplay prevented by browser:', e));
+        
+        // Save the new video to cache for next time
+        localStorage.setItem('ashana-hero-video', finalUrl);
+      }
+    },
+    err => {
+      console.error('[Ashana] Settings/Video error:', err);
+    }
+  );
+}
+
+
 /* ── LIGHT / DARK MODE TOGGLE ── */
 (function() {
   const ROOT    = document.documentElement;
