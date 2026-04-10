@@ -709,9 +709,9 @@ main { padding-left: 0; }
 }
 
 .review-card { 
-  flex-shrink: 0; 
-  width: min(320px, 80vw); /* Keeps cards a consistent size */
-  scroll-snap-align: start; /* Snaps cards into place when scrolling */
+  flex: 0 0 auto !important; 
+  width: min(340px, 85vw) !important; 
+  scroll-snap-align: start; 
   background: var(--glass); 
   backdrop-filter: var(--glass-blur-s); 
   -webkit-backdrop-filter: var(--glass-blur-s); 
@@ -719,10 +719,25 @@ main { padding-left: 0; }
   border-radius: 18px; 
   padding: 1.5rem 1.6rem; 
   transition: transform .4s var(--spring), border-color .4s ease, box-shadow .4s ease; 
+  
+  /* NEW RULES: Make the card a flex column */
+  display: flex !important;
+  flex-direction: column;
+}
+
+.review-msg { 
+  font-size: max(.85rem,14px); 
+  font-weight: 300; 
+  color: var(--ink-mid); 
+  line-height: 1.85; 
+  margin-bottom: 1.2rem; 
+  font-style: italic; 
+  
+  /* NEW RULE: Forces text to fill the gap, pushing the author down */
+  flex-grow: 1; 
 }
 
 .review-stars { color: var(--gold); font-size: .95rem; margin-bottom: .75rem; letter-spacing: .1em; }
-.review-msg { font-size: max(.85rem,14px); font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.2rem; font-style: italic; }
 .review-author { display: flex; align-items: center; gap: .75rem; }
 .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan-dim), var(--gold-glow)); border: 1px solid var(--gold-border); display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; color: var(--gold); flex-shrink: 0; }
 .review-info { min-width: 0; }
