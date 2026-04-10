@@ -699,6 +699,17 @@ onSnapshot(
 );
 
 /* ── TSHIRT PRODUCT MODAL ── */
+
+// 1. Create a dictionary mapping the sizes to your new Stripe links
+const stripeLinks = {
+  'XS': 'https://buy.stripe.com/bJeaEZ4xpf0k9XBfUKebu01',
+  'S':  'https://buy.stripe.com/6oU8wR0h9cScglZ9wmebu02',
+  'M':  'https://buy.stripe.com/6oU7sN2ph2dy4DhdMCebu03',
+  'L':  'https://buy.stripe.com/7sY7sN6Fx4lG0n1aAqebu04',
+  'XL': 'https://buy.stripe.com/6oU8wR9RJ19uedR8siebu05',
+  'XXL':'https://buy.stripe.com/28E5kF4xp5pKglZ23Uebu06'
+};
+
 function openTshirtModal() {
   const modal = document.getElementById('tshirt-product-modal');
   if (!modal) return;
@@ -707,16 +718,22 @@ function openTshirtModal() {
   const firstThumb = document.querySelector('[data-tsm-thumb]');
   tsmSetImg('https://i.ibb.co/20FS6DR1/20260330-085215.jpg', firstThumb);
   document.querySelectorAll('[data-tsm-thumb]').forEach((t,i) => t.classList.toggle('active', i === 0));
+  
+  // Set default size 'M' to active visually
   document.querySelectorAll('.tsm-size-btn').forEach(b => b.classList.toggle('active', b.textContent.trim() === 'M'));
+  
   const buyBtn = document.getElementById('tsm-buy-btn');
-  if (buyBtn) buyBtn.href = 'https://ashanajourney.gumroad.com/l/nesnzj?wanted=true&variant=M';
+  // Set default buy button href to 'M' size Stripe link when modal opens
+  if (buyBtn) buyBtn.href = stripeLinks['M'];
 }
+
 function closeTshirtModal() {
   const modal = document.getElementById('tshirt-product-modal');
   if (!modal) return;
   modal.classList.remove('open');
   document.body.style.overflow = '';
 }
+
 function tsmSetImg(src, thumb) {
   const main = document.getElementById('tsm-main-img');
   if (!main) return;
@@ -725,13 +742,24 @@ function tsmSetImg(src, thumb) {
   document.querySelectorAll('[data-tsm-thumb]').forEach(t => t.classList.remove('active'));
   if (thumb) thumb.classList.add('active');
 }
+
 function tsmSelectSize(btn) {
   document.querySelectorAll('.tsm-size-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   const size = btn.textContent.trim();
   const buyBtn = document.getElementById('tsm-buy-btn');
-  if (buyBtn) buyBtn.href = `https://ashanajourney.gumroad.com/l/nesnzj?wanted=true&variant=${size}`;
+  
+  // Dynamically update the href to the corresponding Stripe link
+  if (buyBtn && stripeLinks[size]) {
+    buyBtn.href = stripeLinks[size];
+  }
 }
+
+// Expose tshirt functions globally (used via onclick in HTML)
+window.tsmSetImg = tsmSetImg;
+window.tsmSelectSize = tsmSelectSize;
+
+
 
 // Expose tshirt functions globally (used via onclick in HTML)
 window.tsmSetImg = tsmSetImg;
