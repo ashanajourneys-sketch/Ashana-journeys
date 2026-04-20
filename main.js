@@ -125,17 +125,23 @@ window.addEventListener('load', initReveals);
       const s = d.data();
       if (s.heroImages && Array.isArray(s.heroImages)) {
         // Map the object array {url: "...", label: "..."} to a simple URL array
-        const firestoreImages = s.heroImages.map(item => item.url);
+        // Add .reverse() to make the newly uploaded images appear first
+        const firestoreImages = s.heroImages.map(item => item.url).reverse();
         
         if (firestoreImages.length > 0) {
-          images = firestoreImages;
+          
+          // 👇 ADD THIS LINE! Overwrite the default images with the reversed Firebase images
+          images = firestoreImages; 
+
           // Ensure index is valid if images were deleted
           if (idx >= images.length) idx = 0;
           img.src = images[idx];
+          img.style.opacity = '1';
         }
       }
     });
   });
+         
 
   function goTo(i) {
     if (images.length === 0) return;
