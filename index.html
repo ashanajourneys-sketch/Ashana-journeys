@@ -7,9 +7,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="format-detection" content="telephone=no"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/LzTVYGrN/IMG-20260411-212105.png">
-  <link rel="icon" href="/Favicon.png">
-<link rel="apple-touch-icon" href="https://i.ibb.co/5DBq6TP/20260413-130449.jpg">
   <title>Ashana Journeys — Adventure. Real People. Real Connections.</title>
   <meta name="description" content="Curated group hikes, diving, surfing and cultural trips across Malaysia and the world. Join a community of real adventurers."/>
   <meta name="robots" content="index, follow"/>
@@ -33,7 +30,6 @@
 </head>
 <body>
 
-<!-- ── TRIP DETAIL MODAL ── -->
 <div id="trip-modal" role="dialog" aria-modal="true" aria-label="Trip details">
   <div class="modal-backdrop" id="modal-backdrop"></div>
   <div class="modal-box">
@@ -54,7 +50,6 @@
   </div>
 </div>
 
-<!-- ── JOIN FORM OVERLAY ── -->
 <div id="join-form-overlay" role="dialog" aria-modal="true" aria-label="Join trip form">
   <div class="jf-backdrop" id="jf-backdrop"></div>
   <div class="jf-box">
@@ -103,7 +98,6 @@
   </div>
 </div>
 
-<!-- ── PAST TRIPS MODAL ── -->
 <div id="past-modal" role="dialog" aria-modal="true" aria-label="Past trips">
   <div class="modal-backdrop" id="past-backdrop"></div>
   <div class="past-box">
@@ -117,14 +111,12 @@
   </div>
 </div>
 
-<!-- ── TSHIRT PRODUCT MODAL ── -->
 <div id="tshirt-product-modal" role="dialog" aria-modal="true" aria-label="Ashana Journeys T-Shirt">
   <div class="tsm-backdrop" id="tsm-backdrop"></div>
   <div class="tsm-box">
     <button class="tsm-close" id="tsm-close-btn" aria-label="Close">✕</button>
     <div class="tsm-inner">
 
-      <!-- Gallery -->
       <div class="tsm-gallery">
         <div class="tsm-main-wrap">
           <img id="tsm-main-img"
@@ -160,12 +152,11 @@
         </div>
       </div>
 
-      <!-- Product Info -->
       <div class="tsm-info">
         <div class="tsm-badge">✦ Official Gear</div>
         <h2 class="tsm-name">Ashana <em>Journeys</em><br/>T-Shirt</h2>
         <p class="tsm-sub">EST. 2026 · Unisex Fit</p>
-        <div class="tsm-price">RM 75</div>
+        <div class="tsm-price">RM 65</div>
         <p class="tsm-price-note">Free delivery for orders via WhatsApp · Ships within 3–5 days</p>
         <p class="tsm-size-lbl">Select Size</p>
         <div class="tsm-sizes">
@@ -177,9 +168,9 @@
           <button type="button" class="tsm-size-btn" onclick="tsmSelectSize(this)">XXL</button>
         </div>
  <a id="tsm-buy-btn" class="tsm-btn-buy"
-   href="https://buy.stripe.com/6oU7sN2ph2dy4DhdMCebu03"
+   href="https://buy.stripe.com/9B67sN9RJ05q0n19wmebu0a"
    target="_blank" rel="noopener noreferrer">
-  🛍️ BUY NOW — RM 75
+  🛍️ BUY NOW — RM 65
 </a>
 
         <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="tsm-btn-wa">
@@ -205,7 +196,6 @@
   </div>
 </div>
 
-<!-- ── TOP NAV (desktop) ── -->
 <nav id="top-nav" role="navigation" aria-label="Primary navigation">
   <a href="#hero" class="tn-brand" aria-label="Ashana Journeys home">
     <img src="hero/logo.png" alt="Ashana Journeys" class="tn-logo"/>
@@ -216,24 +206,39 @@
     <li><a href="#merchant" class="tn-link" data-sec="merchant">Gear</a></li>
     <li><a href="#reviews"  class="tn-link" data-sec="reviews">Reviews</a></li>
     <li><a href="#faq"      class="tn-link" data-sec="faq">FAQ</a></li>
-    <li><a href="#social"   class="tn-link" data-sec="social">Connect</a></li>
+    <li><a href="#"   class="tn-link" data-sec="">Connect</a></li>
   </ul>
   <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="tn-wa" aria-label="WhatsApp us">💬 WhatsApp</a>
   <button class="tn-theme-toggle" id="tn-theme-toggle" aria-label="Toggle light/dark mode" title="Toggle light mode">☀️</button>
 </nav>
 
-<!-- ── DOCK ── -->
 <nav id="dock" role="navigation" aria-label="Main navigation">
-  <a href="#trips" class="dock-btn active" data-sec="trips" aria-label="Trips"><span class="dock-ico">🧭</span><span class="dock-lbl">Trips</span></a>
-  <a href="#about" class="dock-btn" data-sec="about" aria-label="Our story"><span class="dock-ico">🌿</span><span class="dock-lbl">Story</span></a>
-  <a href="#merchant" class="dock-btn" data-sec="merchant" aria-label="Gear store"><span class="dock-ico">🎽</span><span class="dock-lbl">Gear</span></a>
+  <a href="#trips" class="dock-btn active" data-sec="trips" aria-label="Trips">
+    <span class="dock-ico">🧭</span>
+    <span class="dock-lbl">Trips</span>
+  </a>
+
+  <a href="#about" class="dock-btn" data-sec="about" aria-label="Our story">
+    <span class="dock-ico">🌿</span>
+    <span class="dock-lbl">Story</span>
+  </a>
+
+  <a href="#merchant" class="dock-btn" data-sec="merchant" aria-label="Gear store">
+    <span class="dock-ico">🎽</span>
+    <span class="dock-lbl">Gear</span>
+  </a>
+
+<a href="#hero" class="dock-btn" aria-label="Home">
+    <span class="dock-ico">🏠</span>
+  <span class="dock-lbl">Go To The Top</span>
+</a>
+
   <a href="#reviews" class="dock-btn" data-sec="reviews" aria-label="Reviews"><span class="dock-ico">⭐</span><span class="dock-lbl">Reviews</span></a>
-  <a href="#social" class="dock-btn" data-sec="social" aria-label="Connect"><span class="dock-ico">✦</span><span class="dock-lbl">Connect</span></a>
+  <a href="#" class="dock-btn" data-sec="" aria-label="Connect"><span class="dock-ico">✦</span><span class="dock-lbl">Connect</span></a>
 </nav>
 
 <main>
 
-  <!-- HERO -->
   <section id="hero" aria-label="Ashana Journeys — Hero">
     <img id="top-logo" src="hero/logo.png" alt="Ashana Journeys" loading="eager"/>
     <div class="hero-media" aria-hidden="true">
@@ -266,7 +271,6 @@
     </div>
   </section>
 
-  <!-- MARQUEE -->
   <div class="marquee-strip" aria-hidden="true">
     <div class="marquee-track">
       <span class="m-item">Group Hikes</span><span class="m-sep">✦</span>
@@ -282,7 +286,6 @@
     </div>
   </div>
 
-  <!-- TRIPS -->
   <section id="trips" class="section">
     <div class="trips-head reveal">
       <div>
@@ -304,13 +307,13 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about" class="section">
     <div class="wrap">
       <div class="about-grid">
         <div class="about-visual reveal left">
           <div class="about-img-wrap" id="about-slider" data-images='["assets/hiking.jpg","assets/surfing.jpg","assets/diving.jpg","assets/dirtbike.jpg"]' role="img" aria-label="Adventure gallery — swipe or drag to browse">
-                        <img src="" alt="Adventurers on a mountain trail" class="about-img" id="about-slide-img" loading="lazy" decoding="async" width="600" height="750" style="opacity: 0;"/>
+            <img src="" alt="Adventurers on a mountain trail" class="about-img" id="about-slide-img" loading="lazy" decoding="async" width="600" height="750" style="opacity: 0;"/>
+
             <div class="about-img-fade"  aria-hidden="true"></div>
             <div class="about-img-frame" aria-hidden="true"></div>
             <div class="about-swipe"     aria-hidden="true">↔ Swipe</div>
@@ -338,7 +341,6 @@
     </div>
   </section>
 
-  <!-- MANIFESTO -->
   <section id="manifesto" class="section" aria-label="Our philosophy">
     <div class="man-glow-l" aria-hidden="true"></div>
     <div class="man-glow-r" aria-hidden="true"></div>
@@ -351,7 +353,6 @@
     </div>
   </section>
 
-  <!-- GEAR/MERCHANT -->
   <section id="merchant" class="section">
     <div class="merch-head reveal">
       <div class="s-label">Official Gear By</div>
@@ -369,7 +370,7 @@
         <div class="ts-hint" aria-hidden="true">↔ Drag or touch to rotate &nbsp;·&nbsp; Click below to shop</div>
         <div class="mc-body">
           <div class="mc-name">Ashana Journeys T-Shirt</div>
-          <div class="mc-price">RM 75</div>
+          <div class="mc-price">RM 65</div>
           <button class="btn-buy" id="tshirt-buy-btn">View &amp; Buy →</button>
         </div>
       </div>
@@ -377,7 +378,6 @@
     </div>
   </section>
 
-  <!-- REVIEWS -->
   <section id="reviews" class="section">
     <div class="wrap">
       <div class="reviews-head reveal">
@@ -390,7 +390,6 @@
     </div>
   </section>
 
-  <!-- FAQ -->
   <section id="faq" class="section">
     <div class="wrap">
       <div class="faq-head reveal">
@@ -403,7 +402,7 @@
     </div>
   </section>
 
-  <!-- SOCIAL -->
+    <!-- SOCIAL -->
 <section id="social" class="section">
     <div class="social-c">
       <img src="hero/logo.png" alt="Ashana Journeys" class="social-logo reveal" loading="lazy"/>
@@ -430,7 +429,6 @@
       </div>
     </div>
 </section>
-  
 
 </main>
 
@@ -448,7 +446,7 @@
         <a href="#merchant">Gear Store</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
-        <a href="#social">Connect</a>
+        <a href="#">Connect</a>
       </div>
       <div class="ft-col">
         <h5>Contact</h5>
@@ -467,7 +465,6 @@
   </div>
 </footer>
 
-<!-- ── LIGHT MODE TOGGLE (mobile floating) ── -->
 <button class="theme-toggle-float" id="theme-toggle-float" aria-label="Toggle light/dark mode" title="Toggle light mode">☀️</button>
 
 <script type="module" src="main.js"></script>
