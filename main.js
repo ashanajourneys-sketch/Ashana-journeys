@@ -29,8 +29,6 @@ const db  = getFirestore(app);
   set(); // Run once on load
   
   window.addEventListener('resize', () => {
-    // ONLY recalculate if the width changes (e.g. rotating the phone).
-    // This stops the mobile URL bar from breaking the scroll!
     if (window.innerWidth !== lastWidth) {
       lastWidth = window.innerWidth;
       set();
@@ -93,14 +91,12 @@ window.addEventListener('load', initReveals);
   sections.forEach(s => spy.observe(s));
 })();
 
-/* ── ABOUT SLIDER — dynamic from Firestore gallery collection ── */
 /* ── DYNAMIC ABOUT SLIDER (Firestore Integrated) ── */
 (function initSlider() {
   const wrap = document.getElementById('about-slider');
   const img  = document.getElementById('about-slide-img');
   if (!wrap || !img) return;
 
-  // Fallback images in case Firestore is empty
   const defaultImages = [
     'assets/hiking.jpg',
     'assets/surfing.jpg',
@@ -112,28 +108,20 @@ window.addEventListener('load', initReveals);
   let idx = 0;
   let wheelLocked = false;
 
-  // 1. Load Initial images from HTML dataset
   try { 
     images = JSON.parse(wrap.dataset.images || '[]'); 
   } catch (e) { 
     images = defaultImages; 
   }
 
-  // 2. Listen to Firestore 'settings' collection (Matches Admin Panel)
   onSnapshot(collection(db, 'settings'), snap => {
     snap.forEach(d => {
       const s = d.data();
       if (s.heroImages && Array.isArray(s.heroImages)) {
-        // Map the object array {url: "...", label: "..."} to a simple URL array
-        // Add .reverse() to make the newly uploaded images appear first
         const firestoreImages = s.heroImages.map(item => item.url).reverse();
         
         if (firestoreImages.length > 0) {
-          
-          // 👇 ADD THIS LINE! Overwrite the default images with the reversed Firebase images
           images = firestoreImages; 
-
-          // Ensure index is valid if images were deleted
           if (idx >= images.length) idx = 0;
           img.src = images[idx];
           img.style.opacity = '1';
@@ -141,7 +129,6 @@ window.addEventListener('load', initReveals);
       }
     });
   });
-         
 
   function goTo(i) {
     if (images.length === 0) return;
@@ -163,7 +150,6 @@ window.addEventListener('load', initReveals);
     preload.src = nextSrc;
   }
 
-  // ── Touch & Mouse Controls ──
   let startX = 0, dx = 0, dragging = false;
 
   wrap.addEventListener('touchstart', e => { startX = e.changedTouches[0].clientX; }, { passive: true });
@@ -194,8 +180,6 @@ window.addEventListener('load', initReveals);
   }, { passive: false });
 })();
 
-
-// Load gallery from Firestore; fall back to local assets if empty
 (function loadGallerySlider() {
   try {
     onSnapshot(collection(db, 'gallery'), snap => {
@@ -206,8 +190,9 @@ window.addEventListener('load', initReveals);
       const docs = [];
       snap.forEach(d => docs.push({ order: d.data().order ?? 999, url: d.data().url }));
       docs.sort((a, b) => a.order - b.order);
-      const urls = docs.map(d => d.url).filter(Boolean);
+            const urls = docs.map(d => d.url).filter(Boolean).reverse();
       initSlider(urls.length ? urls : FALLBACK_GALLERY);
+
     });
   } catch(e) {
     console.warn('Gallery load failed, using fallback:', e);
@@ -708,12 +693,12 @@ onSnapshot(
 
 // 1. Create a dictionary mapping the sizes to your new Stripe links
 const stripeLinks = {
-  'XS': 'https://buy.stripe.com/bJeaEZ4xpf0k9XBfUKebu01',
-  'S':  'https://buy.stripe.com/6oU8wR0h9cScglZ9wmebu02',
-  'M':  'https://buy.stripe.com/6oU7sN2ph2dy4DhdMCebu03',
-  'L':  'https://buy.stripe.com/7sY7sN6Fx4lG0n1aAqebu04',
-  'XL': 'https://buy.stripe.com/6oU8wR9RJ19uedR8siebu05',
-  'XXL':'https://buy.stripe.com/28E5kF4xp5pKglZ23Uebu06'
+  'XS': 'https://buy.stripe.com/00w7sN2phcScedR0ZQebu08',
+  'S':  'https://buy.stripe.com/eVqdRbfc38BWglZcIyebu09',
+  'M':  'https://buy.stripe.com/9B67sN9RJ05q0n19wmebu0a',
+  'L':  'https://buy.stripe.com/4gM00l8NF8BW9XB0ZQebu0b',
+  'XL': 'https://buy.stripe.com/7sY14p2ph19ufhV9wmebu0c',
+  'XXL':'https://buy.stripe.com/bJe5kF2phcScc5JeQGebu0d'
 };
 
 function openTshirtModal() {
@@ -760,12 +745,6 @@ function tsmSelectSize(btn) {
     buyBtn.href = stripeLinks[size];
   }
 }
-
-// Expose tshirt functions globally (used via onclick in HTML)
-window.tsmSetImg = tsmSetImg;
-window.tsmSelectSize = tsmSelectSize;
-
-
 
 // Expose tshirt functions globally (used via onclick in HTML)
 window.tsmSetImg = tsmSetImg;
